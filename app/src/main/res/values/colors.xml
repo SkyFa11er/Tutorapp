@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="gray">#BDBDBD</color>
+    <color name="primary">#6200EE</color>  <!-- Material Design 主要颜色 -->
+    <color name="white">#FFFFFF</color>
+    <color name="purple_500">#6200EE</color> <!-- 或你想要的紫色 -->
+
+</resources>

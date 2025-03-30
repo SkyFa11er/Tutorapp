@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="20dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 姓名 -->
+        <TextView
+            android:id="@+id/tv_detail_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="孩子姓名"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="#222222" />
+
+        <!-- 聯絡電話 -->
+        <TextView
+            android:id="@+id/tv_detail_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="聯絡電話："
+            android:layout_marginTop="8dp" />
+
+        <!-- 地區 -->
+        <TextView
+            android:id="@+id/tv_detail_district"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="地區："
+            android:layout_marginTop="8dp" />
+
+        <!-- 科目 -->
+        <TextView
+            android:id="@+id/tv_detail_subjects"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="科目需求："
+            android:layout_marginTop="8dp" />
+
+        <!-- 薪資 -->
+        <TextView
+            android:id="@+id/tv_detail_salary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="預算："
+            android:layout_marginTop="8dp" />
+
+        <!-- 需求說明 -->
+        <TextView
+            android:id="@+id/tv_detail_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="需求說明："
+            android:layout_marginTop="8dp" />
+
+        <!-- 發消息按鈕 -->
+        <Button
+            android:id="@+id/btn_send_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="發消息"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="#009688"
+            android:textColor="@android:color/white" />
+    </LinearLayout>
+</ScrollView>

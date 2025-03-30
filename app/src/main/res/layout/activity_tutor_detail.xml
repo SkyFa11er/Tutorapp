@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 可滾動內容 -->
+    <ScrollView
+        android:id="@+id/scroll_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/btn_send_message"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_detail_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="姓名"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:textColor="#222222" />
+
+            <TextView
+                android:id="@+id/tv_detail_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="聯絡電話："
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:id="@+id/tv_detail_subjects"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="教授科目："
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:id="@+id/tv_detail_salary"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="薪資："
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:id="@+id/tv_detail_salary_note"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="備註："
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:id="@+id/tv_detail_intro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="個人簡介："
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:id="@+id/tv_detail_days"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="可預約日期："
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:id="@+id/tv_detail_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="可預約時間："
+                android:layout_marginTop="8dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- 固定底部的發消息按鈕 -->
+    <Button
+        android:id="@+id/btn_send_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="發消息"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="16dp"
+        android:backgroundTint="@color/purple_500"
+        android:textColor="@android:color/white" />
+</RelativeLayout>

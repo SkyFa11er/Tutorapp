@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp"
+    card_view:cardCornerRadius="12dp"
+    card_view:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- 姓名 -->
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="張同學"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#222222" />
+
+        <!-- 部分簡介 -->
+        <TextView
+            android:id="@+id/tv_intro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="熱愛教學，擅長數學與自然科學..."
+            android:textSize="14sp"
+            android:textColor="#444444"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:layout_marginTop="4dp" />
+
+        <!-- 薪資 -->
+        <TextView
+            android:id="@+id/tv_salary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="薪資 400 元/小時"
+            android:textSize="14sp"
+            android:textColor="#555555"
+            android:layout_marginTop="6dp" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
