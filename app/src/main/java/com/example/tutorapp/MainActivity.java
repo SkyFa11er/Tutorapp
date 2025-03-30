@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
             return false;
         });
 
-        // 預設顯示 Home 畫面
+        // 預設顯示 Chat 或 Home 畫面
         Intent intent = getIntent();
         if (intent != null && intent.getBooleanExtra("open_chat", false)) {
             getSupportFragmentManager().beginTransaction()
@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
             btnDoTutor.setVisibility(View.GONE);
             btnFindTutor.setVisibility(View.GONE);
         } else {
-            // 預設顯示 Home 畫面
             getSupportFragmentManager().beginTransaction()
                     .replace(R.id.contentFrame, new FirstFragment())
                     .commit();
@@ -82,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
             btnDoTutor.setVisibility(View.VISIBLE);
             btnFindTutor.setVisibility(View.VISIBLE);
         }
-
     }
 
     @Override
@@ -90,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == RESULT_OK && data != null) {
+            // 透過 FragmentManager 找到 FirstFragment 實例
             FirstFragment fragment = (FirstFragment) getSupportFragmentManager()
                     .findFragmentById(R.id.contentFrame);
 
