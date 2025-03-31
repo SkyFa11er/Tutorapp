@@ -13,6 +13,22 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <!-- ✅ 類別標籤（做家教 / 招家教） -->
+        <TextView
+            android:id="@+id/tv_post_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="【做家教】"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="#333333"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="4dp"
+            android:paddingBottom="4dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/bg_tag_label" />
+
         <!-- 姓名 -->
         <TextView
             android:id="@+id/tv_name"

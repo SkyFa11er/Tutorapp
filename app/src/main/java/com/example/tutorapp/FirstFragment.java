@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.RadioGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,7 +16,8 @@ public class FirstFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private TutorAdapter adapter;
-    private List<PostItem> postList = new ArrayList<>();
+    private List<PostItem> fullList = new ArrayList<>();
+    private List<PostItem> filteredList = new ArrayList<>();
 
     public FirstFragment() {}
 
@@ -28,7 +29,7 @@ public class FirstFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        adapter = new TutorAdapter(postList, postItem -> {
+        adapter = new TutorAdapter(filteredList, postItem -> {
             if (postItem.getType() == PostItem.TYPE_DO) {
                 Intent intent = new Intent(getActivity(), TutorDetailActivity.class);
                 intent.putExtra("tutorInfo", postItem.getTutorInfo());
@@ -42,15 +43,55 @@ public class FirstFragment extends Fragment {
 
         recyclerView.setAdapter(adapter);
 
+        // 切換選單邏輯
+        RadioGroup radioGroup = view.findViewById(R.id.radio_filter);
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.radio_all) {
+                filterPosts("all");
+            } else if (checkedId == R.id.radio_do) {
+                filterPosts("do");
+            } else if (checkedId == R.id.radio_find) {
+                filterPosts("find");
+            }
+        });
+
         return view;
     }
 
-    // 提供方法讓 MainActivity 可以新增資料
+    // ✅ 新增貼文資料
     public void addPost(PostItem item) {
-        postList.add(0, item);
-        if (adapter != null) {
-            adapter.notifyItemInserted(0);
-            recyclerView.scrollToPosition(0);
+        fullList.add(0, item);
+        filterPosts(getCurrentFilterType());
+    }
+
+    // ✅ 根據選項篩選貼文
+    private void filterPosts(String type) {
+        filteredList.clear();
+        if (type.equals("all")) {
+            filteredList.addAll(fullList);
+        } else if (type.equals("do")) {
+            for (PostItem item : fullList) {
+                if (item.getType() == PostItem.TYPE_DO) {
+                    filteredList.add(item);
+                }
+            }
+        } else if (type.equals("find")) {
+            for (PostItem item : fullList) {
+                if (item.getType() == PostItem.TYPE_FIND) {
+                    filteredList.add(item);
+                }
+            }
         }
+        adapter.notifyDataSetChanged();
+    }
+
+    // ✅ 取得目前被選取的類型
+    private String getCurrentFilterType() {
+        if (getView() == null) return "all";
+        RadioGroup group = getView().findViewById(R.id.radio_filter);
+        int checkedId = group.getCheckedRadioButtonId();
+        if (checkedId == R.id.radio_do) return "do";
+        if (checkedId == R.id.radio_find) return "find";
+        return "all";
     }
 }

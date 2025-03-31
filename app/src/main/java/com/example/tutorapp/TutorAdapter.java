@@ -1,5 +1,6 @@
 package com.example.tutorapp;
 
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,7 +27,7 @@ public class TutorAdapter extends RecyclerView.Adapter<TutorAdapter.ViewHolder> 
     @Override
     public TutorAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_tutor, parent, false);
+                .inflate(R.layout.item_tutor, parent, false);  // ← 確保你 XML 是 item_post
         return new ViewHolder(view);
     }
 
@@ -36,12 +37,16 @@ public class TutorAdapter extends RecyclerView.Adapter<TutorAdapter.ViewHolder> 
 
         if (post.getType() == PostItem.TYPE_DO) {
             TutorInfo t = post.getTutorInfo();
+            holder.tvPostType.setText("【做家教】");
+            holder.tvPostType.setBackgroundColor(Color.parseColor("#BBDEFB"));
             holder.tvName.setText(t.getName());
             holder.tvIntro.setText(t.getIntro());
             holder.tvSalary.setText("薪資 " + t.getSalary() + " 元/小時");
 
         } else if (post.getType() == PostItem.TYPE_FIND) {
             FindTutorInfo f = post.getFindTutorInfo();
+            holder.tvPostType.setText("【招家教】");
+            holder.tvPostType.setBackgroundColor(Color.parseColor("#C8E6C9"));
             holder.tvName.setText(f.getChildName());
             holder.tvIntro.setText("需求科目數：" + f.getSubjects().size());
             holder.tvSalary.setText("薪資 " + f.getSalary() + " 元/小時");
@@ -60,10 +65,11 @@ public class TutorAdapter extends RecyclerView.Adapter<TutorAdapter.ViewHolder> 
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvName, tvIntro, tvSalary;
+        TextView tvPostType, tvName, tvIntro, tvSalary;
 
         ViewHolder(View itemView) {
             super(itemView);
+            tvPostType = itemView.findViewById(R.id.tv_post_type);
             tvName = itemView.findViewById(R.id.tv_name);
             tvIntro = itemView.findViewById(R.id.tv_intro);
             tvSalary = itemView.findViewById(R.id.tv_salary);
