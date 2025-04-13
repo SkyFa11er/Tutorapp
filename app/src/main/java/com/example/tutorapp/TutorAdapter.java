@@ -75,4 +75,10 @@ public class TutorAdapter extends RecyclerView.Adapter<TutorAdapter.ViewHolder> 
             tvSalary = itemView.findViewById(R.id.tv_salary);
         }
     }
+
+    public void updateList(List<PostItem> newList) {
+        itemList = newList;
+        notifyDataSetChanged();
+    }
+
 }

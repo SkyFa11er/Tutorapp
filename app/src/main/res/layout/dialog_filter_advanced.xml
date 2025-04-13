@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- 科目選擇 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="選擇科目（可多選）"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_select_subjects"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="選擇科目"
+            android:layout_marginTop="8dp"
+            android:backgroundTint="#2196F3"
+            android:textColor="@android:color/white" />
+
+        <TextView
+            android:id="@+id/tv_selected_subjects"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="尚未選擇"
+            android:layout_marginTop="4dp" />
+
+        <!-- 地區選擇 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="選擇區域"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp" />
+
+        <Spinner
+            android:id="@+id/spinner_district"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- 期望薪資 -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="期望最低薪資（元/小時）"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp" />
+
+        <EditText
+            android:id="@+id/edit_min_salary"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="輸入數字"
+            android:inputType="number" />
+
+    </LinearLayout>
+</ScrollView>
