@@ -44,10 +44,11 @@ public class TutorDetailActivity extends AppCompatActivity {
         Button btnSendMessage = findViewById(R.id.btn_send_message);
         btnSendMessage.setOnClickListener(v -> {
             if (tutor != null) {
-                Intent intent = new Intent(TutorDetailActivity.this, MainActivity.class);
-                intent.putExtra("chat_name", tutor.getName());
-                intent.putExtra("open_chat", true);
-                startActivity(intent);
+                // 回傳聊天對象名稱給 MainActivity
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("chat_name", tutor.getName());
+                setResult(RESULT_OK, resultIntent);
+                finish(); // 關閉此畫面回主頁
             }
         });
     }

@@ -17,7 +17,7 @@ public class FindTutorDetailActivity extends AppCompatActivity {
 
         tvName = findViewById(R.id.tv_detail_name);
         tvPhone = findViewById(R.id.tv_detail_phone);
-        tvDistrict = findViewById(R.id.tv_detail_district); // 新增
+        tvDistrict = findViewById(R.id.tv_detail_district);
         tvSubjects = findViewById(R.id.tv_detail_subjects);
         tvSalary = findViewById(R.id.tv_detail_salary);
         tvNote = findViewById(R.id.tv_detail_note);
@@ -27,7 +27,7 @@ public class FindTutorDetailActivity extends AppCompatActivity {
         if (info != null) {
             tvName.setText("孩子姓名：" + info.getChildName());
             tvPhone.setText("聯絡電話：" + info.getPhone());
-            tvDistrict.setText("地區：廣州" + info.getDistrict()); // 顯示地區
+            tvDistrict.setText("地區：廣州" + info.getDistrict());
             tvSubjects.setText("科目需求：" + String.join("、", info.getSubjects()));
             tvSalary.setText("預算：" + info.getSalary() + " 元/小時");
             tvNote.setText(info.getNote().isEmpty() ? "無其他需求" : "需求說明：" + info.getNote());
@@ -36,10 +36,11 @@ public class FindTutorDetailActivity extends AppCompatActivity {
         Button btnSendMessage = findViewById(R.id.btn_send_message);
         btnSendMessage.setOnClickListener(v -> {
             if (info != null) {
-                Intent intent = new Intent(FindTutorDetailActivity.this, MainActivity.class);
-                intent.putExtra("chat_name", info.getChildName());
-                intent.putExtra("open_chat", true);
-                startActivity(intent);
+                // 回傳聊天名稱至 MainActivity
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("chat_name", info.getChildName());
+                setResult(RESULT_OK, resultIntent);
+                finish(); // 回主頁並由主頁處理跳轉
             }
         });
     }

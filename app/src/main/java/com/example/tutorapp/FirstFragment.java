@@ -14,7 +14,7 @@ public class FirstFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private TutorAdapter adapter;
-    private List<PostItem> postList = new ArrayList<>();
+    private List<PostItem> postList;
     private String currentTypeFilter = "all"; // "all", "do", "find"
 
     // 篩選條件變數
@@ -27,7 +27,18 @@ public class FirstFragment extends Fragment {
     private String selectedDistrict = "";
     private int minSalary = 0;
 
-    public FirstFragment() {}
+    // 建構子：由 MainActivity 建立時傳入資料
+    public FirstFragment(List<PostItem> postList, TutorAdapter adapter) {
+        this.postList = postList;
+        this.adapter = adapter;
+    }
+
+    // 提供 MainActivity 呼叫加入貼文
+    public void addPost(PostItem item) {
+        postList.add(0, item);              // 加到最前
+        adapter.updateList(postList);       // 更新列表
+        filterAdvancedPosts();              // 套用篩選邏輯
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,21 +47,9 @@ public class FirstFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        adapter = new TutorAdapter(postList, postItem -> {
-            if (postItem.getType() == PostItem.TYPE_DO) {
-                Intent intent = new Intent(getActivity(), TutorDetailActivity.class);
-                intent.putExtra("tutorInfo", postItem.getTutorInfo());
-                startActivity(intent);
-            } else if (postItem.getType() == PostItem.TYPE_FIND) {
-                Intent intent = new Intent(getActivity(), FindTutorDetailActivity.class);
-                intent.putExtra("findTutorInfo", postItem.getFindTutorInfo());
-                startActivity(intent);
-            }
-        });
         recyclerView.setAdapter(adapter);
 
-        // 類型切換 RadioGroup（全部／做家教／招家教）
+        // 類型切換
         RadioGroup radioGroup = view.findViewById(R.id.radio_filter);
         radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
             if (checkedId == R.id.radio_all) {
@@ -63,18 +62,11 @@ public class FirstFragment extends Fragment {
             filterAdvancedPosts();
         });
 
-
-        // 進階條件篩選
+        // 進階篩選按鈕
         Button btnFilter = view.findViewById(R.id.btn_filter_advanced);
         btnFilter.setOnClickListener(v -> showAdvancedFilterDialog());
 
         return view;
-    }
-
-    public void addPost(PostItem item) {
-        postList.add(0, item);
-        adapter.updateList(postList);
-        filterAdvancedPosts();
     }
 
     private void showAdvancedFilterDialog() {
@@ -142,7 +134,6 @@ public class FirstFragment extends Fragment {
 
             if (post.getType() == PostItem.TYPE_DO && post.getTutorInfo() != null) {
                 TutorInfo t = post.getTutorInfo();
-
                 if (!selectedSubjectsFilter.isEmpty()) {
                     subjectMatch = false;
                     for (String s : t.getSubjects()) {
@@ -152,16 +143,12 @@ public class FirstFragment extends Fragment {
                         }
                     }
                 }
-
-                int tutorSalary = 0;
                 try {
-                    tutorSalary = Integer.parseInt(t.getSalary());
+                    int tutorSalary = Integer.parseInt(t.getSalary());
+                    salaryMatch = tutorSalary >= minSalary;
                 } catch (NumberFormatException ignored) {}
-                salaryMatch = tutorSalary >= minSalary;
-
             } else if (post.getType() == PostItem.TYPE_FIND && post.getFindTutorInfo() != null) {
                 FindTutorInfo f = post.getFindTutorInfo();
-
                 if (!selectedSubjectsFilter.isEmpty()) {
                     subjectMatch = false;
                     for (String s : f.getSubjects()) {
@@ -171,9 +158,7 @@ public class FirstFragment extends Fragment {
                         }
                     }
                 }
-
                 salaryMatch = f.getSalary() >= minSalary;
-
                 if (!selectedDistrict.equals("不限") && !f.getDistrict().equals(selectedDistrict)) {
                     districtMatch = false;
                 }
