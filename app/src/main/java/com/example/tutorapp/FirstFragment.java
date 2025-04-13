@@ -17,7 +17,7 @@ public class FirstFragment extends Fragment {
     private List<PostItem> postList = new ArrayList<>();
     private String currentTypeFilter = "all"; // "all", "do", "find"
 
-    // 進階條件變數
+    // 篩選條件變數
     private List<String> allSubjects = Arrays.asList(
             "初中語文", "初中數學", "初中物化", "初中英語", "初中生物", "初中政治",
             "高中語文", "高中數學", "高中物化", "高中英語", "高中生物", "高中政治"
@@ -48,38 +48,23 @@ public class FirstFragment extends Fragment {
                 startActivity(intent);
             }
         });
-
         recyclerView.setAdapter(adapter);
 
-        // 類型篩選 Spinner
-        Spinner spinner = view.findViewById(R.id.spinner_filter);
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(requireContext(),
-                android.R.layout.simple_spinner_item,
-                new String[]{"全部", "做家教", "招家教"});
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(spinnerAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View v, int position, long id) {
-                switch (position) {
-                    case 0:
-                        currentTypeFilter = "all";
-                        break;
-                    case 1:
-                        currentTypeFilter = "do";
-                        break;
-                    case 2:
-                        currentTypeFilter = "find";
-                        break;
-                }
-                filterAdvancedPosts();
+        // 類型切換 RadioGroup（全部／做家教／招家教）
+        RadioGroup radioGroup = view.findViewById(R.id.radio_filter);
+        radioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.radio_all) {
+                currentTypeFilter = "all";
+            } else if (checkedId == R.id.radio_do) {
+                currentTypeFilter = "do";
+            } else if (checkedId == R.id.radio_find) {
+                currentTypeFilter = "find";
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {}
+            filterAdvancedPosts();
         });
 
-        // 條件篩選按鈕
+
+        // 進階條件篩選
         Button btnFilter = view.findViewById(R.id.btn_filter_advanced);
         btnFilter.setOnClickListener(v -> showAdvancedFilterDialog());
 
@@ -88,8 +73,8 @@ public class FirstFragment extends Fragment {
 
     public void addPost(PostItem item) {
         postList.add(0, item);
-        adapter.updateList(postList); // 也更新原始資料
-        filterAdvancedPosts(); // 每次新增都重新篩選
+        adapter.updateList(postList);
+        filterAdvancedPosts();
     }
 
     private void showAdvancedFilterDialog() {
@@ -100,7 +85,6 @@ public class FirstFragment extends Fragment {
         Spinner spinnerDistrict = dialogView.findViewById(R.id.spinner_district);
         EditText editMinSalary = dialogView.findViewById(R.id.edit_min_salary);
 
-        // 地區 Spinner 初始化
         String[] districts = {"不限", "越秀區", "天河區", "白雲區", "海珠區", "黃埔區", "荔灣區", "番禺區", "花都區", "南沙區", "增城區", "從化區"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(), android.R.layout.simple_spinner_dropdown_item, districts);
         spinnerDistrict.setAdapter(adapter);
@@ -159,7 +143,6 @@ public class FirstFragment extends Fragment {
             if (post.getType() == PostItem.TYPE_DO && post.getTutorInfo() != null) {
                 TutorInfo t = post.getTutorInfo();
 
-                // 科目篩選
                 if (!selectedSubjectsFilter.isEmpty()) {
                     subjectMatch = false;
                     for (String s : t.getSubjects()) {
@@ -170,19 +153,15 @@ public class FirstFragment extends Fragment {
                     }
                 }
 
-                // 薪資（String → int）
                 int tutorSalary = 0;
                 try {
                     tutorSalary = Integer.parseInt(t.getSalary());
-                } catch (NumberFormatException e) {
-                    tutorSalary = 0;
-                }
+                } catch (NumberFormatException ignored) {}
                 salaryMatch = tutorSalary >= minSalary;
 
             } else if (post.getType() == PostItem.TYPE_FIND && post.getFindTutorInfo() != null) {
                 FindTutorInfo f = post.getFindTutorInfo();
 
-                // 科目篩選
                 if (!selectedSubjectsFilter.isEmpty()) {
                     subjectMatch = false;
                     for (String s : f.getSubjects()) {
@@ -193,10 +172,8 @@ public class FirstFragment extends Fragment {
                     }
                 }
 
-                // 薪資（int）
                 salaryMatch = f.getSalary() >= minSalary;
 
-                // 地區
                 if (!selectedDistrict.equals("不限") && !f.getDistrict().equals(selectedDistrict)) {
                     districtMatch = false;
                 }
@@ -209,5 +186,4 @@ public class FirstFragment extends Fragment {
 
         adapter.updateList(filtered);
     }
-
 }

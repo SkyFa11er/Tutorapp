@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:padding="8dp">
 
-    <!-- 篩選區塊：分類下拉選單 + 進階按鈕 -->
+    <!-- 類型切換（全部 / 做家教 / 招家教） + 進階按鈕 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,35 +13,10 @@
         android:gravity="center_vertical"
         android:paddingBottom="8dp">
 
-        <!-- 類型選擇 -->
-        <Spinner
-            android:id="@+id/spinner_filter"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:spinnerMode="dropdown" />
-
-        <!-- 進階篩選按鈕 -->
-        <Button
-            android:id="@+id/btn_filter_advanced"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="進階篩選"
-            android:layout_marginStart="12dp" />
-    </LinearLayout>
-
-    <!-- 類型切換（全部 / 做家教 / 招家教） -->
-    <LinearLayout
-        android:id="@+id/filter_group"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:paddingBottom="8dp">
-
         <RadioGroup
             android:id="@+id/radio_filter"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -64,6 +39,13 @@
                 android:layout_height="wrap_content"
                 android:text="招家教" />
         </RadioGroup>
+
+        <Button
+            android:id="@+id/btn_filter_advanced"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="進階篩選"
+            android:layout_marginStart="12dp" />
     </LinearLayout>
 
     <!-- 資訊列表 -->
